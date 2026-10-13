@@ -1,0 +1,32 @@
+## 📄 File 3 — `.gitignore`
+
+Save at the root of your project (`AnimeVault/.gitignore`):
+
+```gitignore
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+error_log
+
+# Local config overrides (never commit real credentials)
+backend/config/database.local.php
+
+# Dependencies
+node_modules/
+vendor/
+
+# Temp files
+*.tmp
+*.bak
+*.sql.gz

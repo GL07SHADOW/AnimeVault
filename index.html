@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AnimeVault - Discover trending anime, search thousands of titles and build your personal watchlist.">
+    <meta name="theme-color" content="#090b10">
+    <title>AnimeVault — Discover Anime</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- PAGE LOADER -->
+<div id="pageLoader" class="page-loader">
+    <div class="loader-logo">AV</div>
+    <div class="page-loader-bar"></div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header" id="siteHeader">
+    <div class="header-container">
+        <a href="#home" class="brand" aria-label="AnimeVault Home">
+            <span class="brand-logo">AV</span>
+            <span class="brand-name">Anime<span>Vault</span></span>
+        </a>
+        <nav class="main-navigation" id="mainNavigation" aria-label="Main navigation">
+            <a href="#home" class="nav-link active">Home</a>
+            <a href="#discover" class="nav-link">Discover</a>
+            <a href="#watchlist" class="nav-link">My Watchlist</a>
+            <a href="#about" class="nav-link">About</a>
+        </nav>
+        <div class="header-actions">
+            <button type="button" class="header-search-button" id="headerSearchButton" aria-label="Search anime">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
+            </button>
+            <button type="button" class="profile-button is-guest" id="profileButton" aria-label="Login">Login</button>
+            <button type="button" class="mobile-menu-button" id="mobileMenuButton" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- MOBILE NAVIGATION -->
+<div class="mobile-navigation" id="mobileNavigation">
+    <a href="#home">Home</a>
+    <a href="#discover">Discover</a>
+    <a href="#watchlist">My Watchlist</a>
+    <a href="#about">About</a>
+</div>
+
+<!-- MAIN -->
+<main>
+    <!-- HERO -->
+    <section class="hero-section" id="home">
+        <div class="hero-background"></div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <span class="eyebrow">YOUR ANIME DISCOVERY HUB</span>
+                <h1>Find your next <span>favorite anime.</span></h1>
+                <p class="hero-description">Search thousands of anime titles, explore what's trending, and discover something worth watching.</p>
+                <div class="search-wrapper" id="searchWrapper">
+                    <div class="search-box">
+                        <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
+                        <input type="search" id="animeSearch" placeholder="Search anime..." autocomplete="off" spellcheck="false" aria-label="Search anime">
+                        <button type="button" id="searchButton" class="search-button">Search</button>
+                    </div>
+                    <div id="searchSuggestions" class="search-suggestions"></div>
+                </div>
+                <div class="search-note">Powered by live anime data</div>
+                <div class="hero-actions">
+                    <button type="button" class="primary-button" id="exploreButton">Explore Anime</button>
+                    <button type="button" class="secondary-button" id="heroWatchlistButton">My Watchlist</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-orbit orbit-one"></div>
+                <div class="hero-orbit orbit-two"></div>
+                <div class="hero-card hero-card-main">
+                    <div class="hero-card-image">
+                        <div class="hero-card-gradient"></div>
+                        <span class="hero-card-badge">LIVE</span>
+                        <div class="hero-card-copy">
+                            <small>DISCOVER</small>
+                            <strong>Something new.</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="floating-stat stat-one">
+                    <span>1000+</span>
+                    <small>Anime titles</small>
+                </div>
+                <div class="floating-stat stat-two">
+                    <span>LIVE</span>
+                    <small>Anime data</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DISCOVER -->
+    <section class="content-section" id="discover">
+        <div class="section-container">
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">EXPLORE</span>
+                    <h2 id="resultsTitle">Trending Anime</h2>
+                    <p id="resultsCount">Discover what's popular right now.</p>
+                </div>
+                <div class="section-controls">
+                    <button type="button" class="outline-button active" id="trendingButton">Trending</button>
+                    <button type="button" class="outline-button" id="topRatedButton">Top Rated</button>
+                </div>
+            </div>
+            <div id="errorMessage" class="error-state" hidden></div>
+            <div id="loading" class="anime-grid" hidden>
+                <div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>
+                <div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>
+            </div>
+            <div id="animeGrid" class="anime-grid"></div>
+            <div class="load-more-wrapper" id="loadMoreWrapper">
+                <button type="button" id="loadMoreButton" class="load-more-button">Load More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- WATCHLIST -->
+    <section class="content-section watchlist-section" id="watchlist">
+        <div class="section-container">
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">YOUR LIBRARY</span>
+                    <h2>My Watchlist</h2>
+                    <p id="watchlistCount">0 saved anime</p>
+                </div>
+                <button type="button" id="clearWatchlistButton" class="outline-button">Clear All</button>
+            </div>
+            <div id="watchlistGrid" class="anime-grid"></div>
+            <div id="watchlistEmpty" class="watchlist-empty">
+                <div class="empty-icon">+</div>
+                <h3>Your watchlist is empty</h3>
+                <p>Save anime from the discovery section and they will appear here.</p>
+                <button type="button" class="primary-button" id="emptyWatchlistButton">Discover Anime</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about-section" id="about">
+        <div class="section-container">
+            <div class="about-layout">
+                <div class="about-heading">
+                    <span class="section-label">ABOUT ANIMEVAULT</span>
+                    <h2>A simple place to discover anime.</h2>
+                </div>
+                <div class="about-content">
+                    <p>AnimeVault is designed to make anime discovery simple. Search for a title, explore trending shows, save something interesting to your watchlist, and come back whenever you're ready to watch.</p>
+                    <div class="about-features">
+                        <div class="about-feature"><strong>Live Anime Database</strong><span>Anime information is loaded dynamically.</span></div>
+                        <div class="about-feature"><strong>Personal Watchlist</strong><span>Your saved titles stay on your device.</span></div>
+                        <div class="about-feature"><strong>Built for Discovery</strong><span>Search and explore without unnecessary clutter.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+    <div class="section-container">
+        <div class="footer-layout">
+            <a href="#home" class="brand footer-brand">
+                <span class="brand-logo">AV</span>
+                <span class="brand-name">Anime<span>Vault</span></span>
+            </a>
+            <p>Discover. Save. Watch.</p>
+            <span class="footer-copy">AnimeVault frontend project</span>
+        </div>
+    </div>
+</footer>
+
+<!-- ANIME DETAILS MODAL -->
+<div id="animeDetailsModal" class="anime-modal" aria-hidden="true">
+    <div class="anime-modal-backdrop"></div>
+    <div class="anime-modal-content" role="dialog" aria-modal="true" aria-labelledby="modalAnimeTitle">
+        <button type="button" class="anime-modal-close" data-modal-close aria-label="Close">×</button>
+        <div class="anime-modal-banner" data-modal-banner></div>
+        <div class="anime-modal-body">
+            <img class="anime-modal-poster" data-modal-image src="https://placehold.co/400x600/11141d/ffffff?text=Anime" alt="">
+            <div class="anime-modal-info">
+                <span class="modal-label">ANIME DETAILS</span>
+                <h2 id="modalAnimeTitle" data-modal-title>Anime Title</h2>
+                <div class="modal-stats">
+                    <span>Score: <strong data-modal-score>N/A</strong></span>
+                    <span>Episodes: <strong data-modal-episodes>?</strong></span>
+                    <span>Status: <strong data-modal-status>Unknown</strong></span>
+                    <span>Type: <strong data-modal-type>Anime</strong></span>
+                    <span>Year: <strong data-modal-year>N/A</strong></span>
+                </div>
+                <p data-modal-description>No synopsis available.</p>
+                <div class="modal-genres" data-modal-genres></div>
+                <div class="modal-actions">
+                    <button type="button" class="modal-watchlist-button" data-modal-watchlist>+ Add to Watchlist</button>
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="modal-trailer-button" data-modal-link>View on AniList</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div id="authModal" class="auth-modal" aria-hidden="true">
+    <div class="auth-modal-backdrop" data-auth-close></div>
+    <div class="auth-modal-card" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+
+        <button type="button" class="auth-modal-close" data-auth-close aria-label="Close">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+            </svg>
+        </button>
+
+        <div class="auth-brand">
+            <div class="auth-brand-logo">AV</div>
+        </div>
+
+        <div class="auth-headings">
+            <h2 id="authModalTitle" class="auth-title">Welcome back</h2>
+            <p class="auth-subtitle">Sign in to sync your watchlist</p>
+        </div>
+
+        <div class="auth-tabs" role="tablist">
+            <button type="button" class="auth-tab active" data-auth-tab="login" role="tab">Log In</button>
+            <button type="button" class="auth-tab" data-auth-tab="signup" role="tab">Sign Up</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form class="auth-form" id="loginForm" autocomplete="on">
+            <div class="auth-message" id="loginMessage"></div>
+
+            <div class="form-group">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" required>
+                <div class="form-error" id="loginEmailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter your password" autocomplete="current-password" required minlength="6">
+                <div class="form-error" id="loginPasswordError"></div>
+            </div>
+
+            <button type="submit" class="auth-submit">
+                Log In
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+        </form>
+
+        <!-- SIGNUP FORM -->
+        <form class="auth-form" id="signupForm" autocomplete="on" style="display:none;">
+            <div class="auth-message" id="signupMessage"></div>
+
+            <div class="form-group">
+                <label for="signupName">Username</label>
+                <input type="text" id="signupName" placeholder="AnimeFan99" autocomplete="username" required>
+                <div class="form-error" id="signupNameError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="signupEmail">Email</label>
+                <input type="email" id="signupEmail" placeholder="you@example.com" autocomplete="email" required>
+                <div class="form-error" id="signupEmailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="signupPassword">Password</label>
+                <input type="password" id="signupPassword" placeholder="At least 6 characters" autocomplete="new-password" required minlength="6">
+                <div class="form-error" id="signupPasswordError"></div>
+            </div>
+
+            <button type="submit" class="auth-submit">
+                Create Account
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+        </form>
+
+        <div class="auth-switch" id="authSwitchText">
+            Don't have an account? <button type="button" data-auth-switch="signup">Sign up</button>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div id="animeToast" class="toast" aria-live="polite"></div>
+
+<!-- BACK TO TOP -->
+<button type="button" id="backToTop" class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<script src="js/script.js" defer></script>
+</body>
+</html>
