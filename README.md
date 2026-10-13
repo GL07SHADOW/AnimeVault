@@ -2,7 +2,7 @@
 
 A full-stack anime discovery and watchlist web application built with vanilla JavaScript, PHP, and MySQL. Search thousands of anime titles via the AniList GraphQL API, build a personal watchlist, and manage your account with secure authentication.
 
-![AnimeVault](docs/screenshots/home.png)
+![AnimeVault](docs/screenshots/AnimeVault.png)
 
 ---
 
